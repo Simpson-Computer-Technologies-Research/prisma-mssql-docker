@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("MSSQL_DATABASE_URL")
+}
+
+model Application {
+  id        String   @id @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //
+  // Relations
+  //
+  first     First?
+  second    Second?
+}
+
+model First {
+  id            String      @id @unique @default(uuid())
+  name          String
+  //
+  // Parent application
+  //
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  applicationId String      @unique
+}
+
+model Second {
+  id            String      @id @unique @default(uuid())
+  name          String
+  //
+  // Parent application
+  //
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  applicationId String      @unique
+}
+
+// npx prisma generate
+// npx prisma migrate dev --name init

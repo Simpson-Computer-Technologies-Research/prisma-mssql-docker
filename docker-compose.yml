@@ -1,0 +1,27 @@
+# version: "3.8" # version is no longer required by docker
+services:
+  # Azure SQL Server from Dockerfile
+  database:
+    # image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: azure-sql-edge
+    networks:
+      - azure-sql-edge
+    ports:
+      - "${MSSQL_SERVER_PORT}:${MSSQL_SERVER_PORT}"
+    restart: always
+
+    # build the image
+    build:
+      context: ./database
+      args:
+        - ACCEPT_EULA=$ACCEPT_EULA
+        - MSSQL_USER=$MSSQL_USER
+        - MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD
+        - MSSQL_PID=$MSSQL_PID
+        - MSSQL_DATABASE=$MSSQL_DATABASE
+        - MSSQL_SERVER_HOST=$MSSQL_SERVER_HOST
+        - MSSQL_SERVER_PORT=$MSSQL_SERVER_PORT
+
+networks:
+  azure-sql-edge:
+    driver: bridge
