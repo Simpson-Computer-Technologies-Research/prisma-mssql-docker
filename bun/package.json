@@ -1,5 +1,5 @@
 {
-  "name": "prisma-test",
+  "name": "prisma-mssql-docker",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {

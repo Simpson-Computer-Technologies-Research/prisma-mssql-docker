@@ -1,4 +1,4 @@
-# prisma-test
+# prisma-mssql-docker
 
 To install dependencies:
 
